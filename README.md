@@ -15,7 +15,7 @@ The easiest way to obtain the aftp.sh script is through a git command.
 
 First install git:
 
-	# yum install git -y
+	# sudo yum install git -y
 
 After logging in to your EC2, download the aftp.sh script with this command,
 

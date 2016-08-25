@@ -14,7 +14,7 @@ fi
 public_hostname=`curl -s http://169.254.169.254/latest/meta-data/public-hostname`
 echo public hostname == $public_hostname
 
-region=`curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone/`
+region=`curl -s http://169.254.169.254/latest/meta-data/hostname | awk -F. '{print $2;}'`
 echo '        ' region == $region
 
 security_group=`curl -s http://169.254.169.254/latest/meta-data/security-groups/`
@@ -25,6 +25,7 @@ echo '' security group == $security_group
 echo ''
 echo opening port 80 ...
 echo aws ec2 authorize-security-group-ingress --group-name $security_group --region $region --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name $security_group --region $region --protocol tcp --port 80 --cidr 0.0.0.0/0
 
 
 echo ''
@@ -36,7 +37,7 @@ echo starting apache ...
 service httpd restart
 
 ## create index.html
-cat > index.html <<EOF
+cat > /tmp/index.html <<EOF
 <HTML>
 <BODY>
 Automation for the People!
@@ -44,7 +45,7 @@ Automation for the People!
 </HTML>
 EOF
 
-cp index.html /var/www/html
+cp /tmp/index.html /var/www/html
 
 echo ''
 echo check output of http://$public_hostname
