@@ -23,6 +23,7 @@ After logging in to your EC2, download the aftp.sh script with this command,
 
 Then run the script either as root or with sudo:
 
+	# cd AFTP
 	# sudo ./aftp.sh
 
 The final line of output will inform you what URL you can use to connect
